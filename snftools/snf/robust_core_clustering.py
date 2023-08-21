@@ -86,7 +86,6 @@ def robust_core_clustering_matrix(
             print(f"{i} samples complete")
         # take a sample of the dataset, subset rows and columns of adj matrices
         # this could look like an N-size list of indices
-        # sample = sorted(random.sample(indices, round(percent_sample * n)))
         sample = np.sort(np.random.choice(n, round(percent_sample * n), replace=False))
         # tally which patients clustered together
         add_cooccurrences_to_matrix(sampled_together, sample)

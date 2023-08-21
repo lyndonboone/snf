@@ -1,3 +1,15 @@
+# Copyright 2023 AICONSLab
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#     http://www.apache.org/licenses/LICENSE-2.0
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
 import networkx as nx
 import numpy as np
 from sklearn.cluster import spectral_clustering
@@ -18,6 +30,21 @@ def snf_analysis(
     normalize=True,
     seed=3333,
 ):
+    """
+    Runs a basic SNF workflow from end to end.
+
+    Args:
+        All args correspond to those for make_affinity and SNF functions.
+
+    Returns:
+        matrices: A list containing three connectivity matrices: the SNF matrix,
+            the "dense" network output from the robust_core_clustering function,
+            and a "sparse" version of this matrix only keeping those values
+            > (1 / C) **2
+        labels: A list of assigned labels based on the three matrices above.
+        sils: A list of average silhouette values corresponding to the three
+            matrices above.
+    """
     if K is None:
         K = int(data[0].shape[0] / C)
     aff_matrices = make_affinity(data, metric=metric, K=K, mu=mu, normalize=normalize)
@@ -44,34 +71,3 @@ def snf_analysis(
         G = nx.from_numpy_array(matrix)
         visualize_graph(G, color=labels[i])
     return [snf, dense, sparse], labels, sils
-
-
-# from scipy.spatial.distance import cdist
-# from scipy.stats import zscore
-# import snf
-
-# from snftools.snf import SNF
-
-
-# data
-# metric
-# mu
-# K
-# t
-
-# affinity_networks = snf.make_affinity(data, metric=metric, K=K, mu=mu)
-# fused_network = SNF(affinity_networks, K=K, t=t)
-
-
-# data = load_data()  # TODO create load_data function based on config
-
-# def compute_snf(tables, K=20, t=20, alpha=0.5, metric="sqeuclidean"):
-#     aff_matrices = []
-#     for table in tables:
-#         table = zscore(table, ddof=1)
-#         dist = cdist(table, table, metric=metric)
-
-
-# for table in data:
-#     table = zscore(table, ddof=1)
-#     table =

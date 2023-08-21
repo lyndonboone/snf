@@ -1,3 +1,15 @@
+# Copyright 2023 AICONSLab
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#     http://www.apache.org/licenses/LICENSE-2.0
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
 import numpy as np
 
 from snftools.utils import dominateset
@@ -28,10 +40,6 @@ def SNF(Wall, K=20, t=20):
         return X
 
     LW = len(Wall)
-    # newW = [None] * LW
-    # nextW = [None] * LW
-    # newW = np.empty(LW, dtype=np.float64)
-    # nextW = np.empty(LW, dtype=np.float64)
     newW = np.empty((LW,) + Wall[0].shape, dtype=np.float64)
     nextW = np.empty((LW,) + Wall[0].shape, dtype=np.float64)
 
@@ -52,7 +60,6 @@ def SNF(Wall, K=20, t=20):
             for k in range(LW):
                 if k != j:
                     sumWJ += Wall[k]
-            # nextW[j] = newW[j] @ (sumWJ / (LW - 1)) @ newW[j].T
             nextW[j] = newW[j].dot(sumWJ / (LW - 1)).dot(newW[j].T)
         # normalize each new network
         for j in range(LW):
