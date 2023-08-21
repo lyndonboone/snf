@@ -163,5 +163,5 @@ cython_debug/
 .vscode/
 notebooks/
 snftools/algo/
-tests/test_solution.py
-tests/test_solutions.py
+# tests/test_solution*
+# tests/test_solutions.py
